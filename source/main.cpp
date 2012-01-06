@@ -46,7 +46,7 @@ int main(void)
 
 	while(1) { 
 		count++;
-		if (count>600 && zombies.size()<0)
+		if (count>600 && zombies.size()<12)
 		{
 			zombieType * another = new zombieType;
 			zombies.push_back(*another);
