@@ -1,0 +1,6 @@
+Debug/
+*.nds
+*.elf
+build/
+*.sdf
+*.opensdf
