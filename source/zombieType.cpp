@@ -93,10 +93,11 @@ void zombieType::animate()
 	
 }
 
-void zombieType::render(int i,camera &came)
+void zombieType::render(int i,camera &cam)
 {
-	oamSet(&oamMain, i, x-came.getX(), y-came.getY(), 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, 
-						sprite_gfx_mem, -1, false, false, false, false, false);
+
+	oamSet(&oamMain, i, x-cam.getX(), y-cam.getY(), 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, 
+						sprite_gfx_mem, -1, false, offScreen(cam), false, false, false);
 }
 int zombieType::getX()
 {
@@ -150,4 +151,12 @@ void zombieType::setState(int set)
 u16* zombieType::getGfx()
 {
 	return sprite_gfx_mem;
+}
+bool zombieType::offScreen(camera &cam)
+{
+	return !(
+		x > cam.getX()-36 
+		&& x < cam.getX() + SCREEN_RIGHT+36 
+		&& y > cam.getY()-36 
+		&& y < cam.getY() + SCREEN_BOTTOM+36);
 }

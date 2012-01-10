@@ -64,6 +64,7 @@
     <ClCompile Include="source\gamecore.cpp" />
     <ClCompile Include="source\heroType.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\mainGame.cpp" />
     <ClCompile Include="source\zombieType.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +74,7 @@
     <ClInclude Include="source\constants.h" />
     <ClInclude Include="source\gamecore.h" />
     <ClInclude Include="source\heroType.h" />
+    <ClInclude Include="source\mainGame.h" />
     <ClInclude Include="source\zombieType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

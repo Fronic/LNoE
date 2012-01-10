@@ -7,10 +7,12 @@
 class heroType
 {
 public:
+	heroType();
 	//constructor sets starting location on screen
 	heroType(int tempX, int tempY);
 	//initualizes other stuff
 	void init(heroType *sprite, u8* gfx);
+	void init(int tempX, int tempY,heroType *sprite, u8* gfx);
 	//animates the hero
 	void animate();
 	void moveHero(int direction);

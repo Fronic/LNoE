@@ -8,8 +8,10 @@ class camera
 public:
 	//constructor
 	//takes starting cord, then background IDs
+	camera();
 	camera(int, int,int,int);
 	//moves camera
+	void init(int, int , int, int);
 	void panLeft();
 	void panRight();
 	void panUp();

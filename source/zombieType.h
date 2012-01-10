@@ -2,6 +2,7 @@
 #define H_zombieType
 
 #include "constants.h"
+#include "camera.h"
 class camera; //so this class can access a camera object
 //Hate using type in class names; forced to because gfx
 class zombieType
@@ -25,6 +26,7 @@ public:
 	void addFrame();
 	void setState(int);
 	u16* getGfx();
+	bool offScreen(camera &);
 private:
 	int x;
 	int y;

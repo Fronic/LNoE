@@ -1,9 +1,8 @@
-#ifndef H_game
-#define H_game
+#ifndef H_core
+#define H_core
 
 #include "constants.h"
-
-class State;
+#include "mainGame.h"
 
 class gamecore
 {
@@ -17,11 +16,13 @@ public:
 	void process();
 	//renders
 	void render();
+	
 
 private:
 	//vector<State*> states;
-	int keys;
-	bool playing;
+	mainGame game;
+	uint8 currentState;
+	bool CUNT;
 };
 
 #endif

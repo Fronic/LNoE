@@ -18,15 +18,14 @@ using namespace std;
 #include "zombie.h"
 
 //classes
-#include "gamecore.h"
-#include "heroType.h"
 
+#include "heroType.h"
 #include "zombieType.h"
 #include "camera.h"
 
 //defines
 #define FRAMES_PER_ANIMATION 3
-#define FRAMES_PER_ANIMATION_Z 3
+#define FRAMES_PER_ANIMATION_Z 4
 
 //---------------------------------------------------------------------
 // The state of the sprite (which way it is walking)
@@ -54,5 +53,10 @@ using namespace std;
 //---------------------------------------------------------------------
 #define MAP_WIDTH 512
 #define MAP_HEIGHT 1024
+
+#define MAINMENU 0
+#define MAINGAME 1
+#define PAUSEMENU 2
+#define EXIT 3
 
 #endif

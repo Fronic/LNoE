@@ -1,6 +1,18 @@
 #include "camera.h"
 
+camera::camera()
+{
+
+}
+
 camera::camera(int startX, int startY, int background, int background2)
+{
+	x = startX;
+	y = startY;
+	bg = background;
+	bg2 = background2;
+}
+void camera::init(int startX, int startY, int background, int background2)
 {
 	x = startX;
 	y = startY;

@@ -1,5 +1,9 @@
 #include "heroType.h"
 
+heroType::heroType()
+{
+
+}
 
 heroType::heroType(int tempX, int tempY)
 {
@@ -16,6 +20,18 @@ heroType::heroType(int tempX, int tempY)
 //---------------------------------------------------------------------
 void heroType::init(heroType *sprite, u8* gfx)
 {
+	sprite->sprite_gfx_mem = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
+
+	sprite->frame_gfx = gfx;
+	animate();
+}
+void heroType::init(int tempX, int tempY,heroType *sprite, u8* gfx)
+{
+		x = tempX;
+	y = tempY;
+	state = W_UP;
+	anim_frame=0;
+	frameDelay=5;
 	sprite->sprite_gfx_mem = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 
 	sprite->frame_gfx = gfx;
@@ -40,8 +56,8 @@ void heroType::animate()
 	{
 		frameDelay++;
 	}
-	oamSet(&oamMain, 0, x, y, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, 
-		sprite_gfx_mem, -1, false, false, false, false, false);
+	oamSet(&oamMain, 0, x, y, 0, 1, SpriteSize_32x32, SpriteColorFormat_256Color, 
+		sprite_gfx_mem, -1, false, false, false, false, true);
 
 }
 

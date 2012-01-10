@@ -2,25 +2,30 @@
 //
 //	Author: Devlin Richberger
 //	Description: Revisioning of the board game Last Night on Earth for DS
-//	Version: 0.0.11
+//	Version: 0.0.15
 //	----
 //	TODO
 //	----
-//	Short-Term: make lose conditions, run game as an object
-//	Long-Term: let player fight back/win conditions, game menu, saving 
+//	Short-Term: player/zombie fights and health, game menu
+//	Long-Term:saving 
 //	Distant-Term: hero abilities, weapons, zombie abilities, multiplayer
 //
 //============================================================================
 
-#include "constants.h" //has all includes, consts and other stuffs
+#include "gamecore.h" //has all includes, consts and other stuffs
 
-void initualize(); //initualizes VRAM and other stuffs
-void events(heroType &,camera &); //checks for key events and handles them
+//void initualize(); //initualizes VRAM and other stuffs
+//void events(heroType &,camera &); //checks for key events and handles them
 
 
 int main(void)
 {
+	gamecore core;
+	core.run();
+}
+/*
 	int count=0;
+	bool game = true;
 	//make our hero
 	heroType hero(112,80);
 
@@ -29,8 +34,6 @@ int main(void)
 
 	//further initualizes what our hero needs to blit
 	hero.init(&hero, (u8*)heroTiles);
-	dmaCopy(heroPal, SPRITE_PALETTE, 512);
-
 	//sets up our backgrounds
 	int bg3 = bgInit(3, BgType_Bmp8, BgSize_B8_512x512,0,0);
 	dmaCopy(grassBitmap, bgGetGfxPtr(bg3), grassBitmapLen);
@@ -43,8 +46,9 @@ int main(void)
 	camera cam(0,0,bg3,bg2);
 	hero.animate();	//insures our hero is blitted at least once
 	vector<zombieType> zombies(1);
+	
 
-	while(1) { 
+	while(game) { 
 		count++;
 		if (count>600 && zombies.size()<12)
 		{
@@ -71,17 +75,7 @@ int main(void)
 			for(int i=0;i < zombies.size();i++)
 			{
 				zombies[i].move(hero.getX()+cam.getX() +8,hero.getY()+cam.getY()+9);
-				if(zombies[i].getX() > cam.getX() && zombies[i].getX() < cam.getX() + SCREEN_RIGHT && zombies[i].getY() > cam.getY() && zombies[i].getY() < cam.getY() + SCREEN_BOTTOM)
-				{
-					/*oamSet(&oamMain, i+1, zombies[i].getX()-cam.getX(), zombies[i].getY()-cam.getY(), 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, 
-						zombies[i].getGfx(), -1, false, false, false, false, false);*/
 					zombies[i].render(i+1, cam);
-				}
-				else
-				{
-					oamSet(&oamMain, i+1, zombies[i].getX()-cam.getX(), zombies[i].getY()-cam.getY(), 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, 
-						zombies[i].getGfx(), -1, false, true, false, false, false);
-				}
 			}
 		}
 		swiWaitForVBlank();
@@ -100,6 +94,14 @@ int main(void)
 			<< zombies[1].getX()-cam.getX() << " " << zombies[1].getY()-cam.getY() << endl;
 		cout << "TIME " << zombies[0].getTime() << endl;
 		cout << "TIME2 " << time(NULL) << endl;
+		for(int i=0;i < zombies.size();i++)
+			{
+				if(zombies[i].getX() == (hero.getX()+cam.getX() +8) && zombies[i].getY() == (hero.getY()+cam.getY()+9))
+				{
+					game = false;
+					cout << "GAME OVER" << endl;
+				}
+			}
 	}
 
 	return 0;
@@ -122,7 +124,12 @@ void initualize()
 	vramSetBankE(VRAM_E_MAIN_SPRITE);
 	vramSetBankD(VRAM_D_SUB_SPRITE);
 
-	oamInit(&oamMain, SpriteMapping_1D_128, false);
+	oamInit(&oamMain, SpriteMapping_1D_256, true);
+		vramSetBankF(VRAM_F_LCD);
+	
+	dmaCopy(heroPal, VRAM_F_EXT_SPR_PALETTE[1], 512);
+	dmaCopy(zombiePal, VRAM_F_EXT_SPR_PALETTE[0], 512);
+	vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
 }
 
 //---------------------------------------------------------------------
@@ -217,3 +224,4 @@ void events(heroType &hero,camera &cam)
 
 	}
 }
+*/

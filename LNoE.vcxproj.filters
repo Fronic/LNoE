@@ -49,6 +49,9 @@
     <ClCompile Include="source\zombieType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\mainGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="build\grass.h">
@@ -70,6 +73,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\zombieType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\mainGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
