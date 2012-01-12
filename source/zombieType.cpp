@@ -8,6 +8,7 @@ zombieType::zombieType()
 	state = W_UP;
 	anim_frame=0;
 	frameDelay=0;
+	health = 1;
 }
 
 void zombieType::startRandom()
@@ -95,9 +96,15 @@ void zombieType::animate()
 
 void zombieType::render(int i,camera &cam)
 {
-
-	oamSet(&oamMain, i, x-cam.getX(), y-cam.getY(), 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, 
+		animate();
+	oamSet(&oamMain, i+10, x-cam.getX(), y-cam.getY(), 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, 
 						sprite_gfx_mem, -1, false, offScreen(cam), false, false, false);
+}
+void zombieType::render(int i,camera &cam,bool unrender)
+{
+	animate();
+	oamSet(&oamMain, i+10, x-cam.getX(), y-cam.getY(), 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, 
+						sprite_gfx_mem, -1, false, unrender, false, false, false);
 }
 int zombieType::getX()
 {
@@ -141,7 +148,6 @@ void zombieType::move(int xDir, int yDir)
 		y--;
 		setState(Z_UP);
 	}
-	animate();
 }
 
 void zombieType::setState(int set)

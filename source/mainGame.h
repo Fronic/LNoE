@@ -18,6 +18,7 @@ public:
 	//renders
 	void renderMain();
 	void renderSub();
+	void fight(int);
 
 private:
 	//vector<State*> states;
@@ -25,6 +26,8 @@ private:
 	bool game;
 	bool pause;
 	int count;
+	int hurtTimer;
+	int random;
 	//make our hero
 	heroType hero;
 	camera cam;

@@ -16,7 +16,8 @@ public:
 	void init();
 	//animates the hero
 	void animate();
-	void render(int, camera &came);
+	void render(int, camera &);
+	void render(int, camera &, bool);
 	void move(int, int);
 	//all kinds of get and set functions
 	int getX();
@@ -30,6 +31,7 @@ public:
 private:
 	int x;
 	int y;
+	int health;
 
 	u16* sprite_gfx_mem;
 	u8*  frame_gfx;

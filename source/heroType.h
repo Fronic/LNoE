@@ -24,15 +24,26 @@ public:
 	void addFrame();
 	void setState(int);
 	u16* getGfx();
+	void setLife(int);
+	void addLife(int);
+	int getLife();
+	void displayHealth();
+
 private:
 	int x;
 	int y;
+	int health;
+	int maxHealth;
 
 	u16* sprite_gfx_mem;
 	u8*  frame_gfx;
+	vector<u16*> heart_gfx_mem;
+	vector<u8*>  heart_frame_gfx;
 
 	int state;
 	int anim_frame;
+	vector<int> heart_state;
+	vector<int> heart_anim_frame;
 
 	int frameDelay;
 };

@@ -16,6 +16,7 @@ using namespace std;
 #include "grass.h"
 #include "hero.h"
 #include "zombie.h"
+#include "life.h"
 
 //classes
 

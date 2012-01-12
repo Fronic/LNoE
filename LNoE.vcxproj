@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\camera.cpp" />
+    <ClCompile Include="source\constants.cpp" />
     <ClCompile Include="source\gamecore.cpp" />
     <ClCompile Include="source\heroType.cpp" />
     <ClCompile Include="source\main.cpp" />

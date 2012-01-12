@@ -5,6 +5,7 @@ mainGame::mainGame()
 	game = true;
 	pause = false;
 	count=0;
+	hurtTimer = 600;
 
 	//initualize vram, oam, console, and switch the screens
 	initiate();
@@ -23,6 +24,7 @@ mainGame::mainGame()
 	cam.init(0,0,bg3,bg2);
 	hero.animate();	//ensures our hero is blitted at least once
 	//vector<zombieType> zombies(1);
+	vector<zombieType> zombies(1);
 
 }
 /*void mainGame::run()
@@ -46,6 +48,7 @@ void mainGame::initiate()
 	vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
 	vramSetBankB(VRAM_B_MAIN_BG_0x06020000);	
 	vramSetBankE(VRAM_E_MAIN_SPRITE);
+	vramSetBankG(VRAM_G_MAIN_SPRITE);
 	vramSetBankD(VRAM_D_SUB_SPRITE);
 
 	oamInit(&oamMain, SpriteMapping_1D_256, true);
@@ -53,6 +56,7 @@ void mainGame::initiate()
 
 	dmaCopy(heroPal, VRAM_F_EXT_SPR_PALETTE[1], 512);
 	dmaCopy(zombiePal, VRAM_F_EXT_SPR_PALETTE[0], 512);
+	dmaCopy(lifePal, VRAM_F_EXT_SPR_PALETTE[2], 512);
 	vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
 }
 
@@ -148,12 +152,25 @@ int mainGame::events()
 		if(hero.getFrame() >= FRAMES_PER_ANIMATION) hero.setFrame(0); //resets frame to initual one
 		hero.animate(); //render it
 	}
+	for(int i=0;i < zombies.size();i++)
+	{
+		if(zombies[i].getX() == (hero.getX()+cam.getX() +8) && zombies[i].getY() == (hero.getY()+cam.getY()+9))
+		{
+			fight(i);
+		}
+	}
+	if(hero.getLife() == 0)
+	{
+		return EXIT;
+	}
 	return MAINGAME;
 }
 
 void mainGame::processMain()
 {
 	count++;
+	hurtTimer++;
+	random++;
 	if (count>600 && zombies.size()<12)
 	{
 		zombieType * another = new zombieType;
@@ -178,16 +195,30 @@ void mainGame::processMain()
 	{
 		for(int i=0;i < zombies.size();i++)
 		{
+			for(int j=0;j < zombies.size();j++)
+			{
+				if(i != j)
+				{
+					if(zombies[i].getX() == zombies[j].getX()+16)
+					{
+						zombies[i].move(zombies[i].getX()+1,zombies[i].getY());
+					}
+					else if(zombies[i].getX()+16 == zombies[j].getX())
+					{
+						zombies[i].move(zombies[i].getX()-1,zombies[i].getY());
+					}
+					if(zombies[i].getY() == zombies[j].getY()+16)
+					{
+						zombies[i].move(zombies[i].getX(),zombies[i].getY()+1);
+					}
+					else if(zombies[i].getY()+16 == zombies[j].getY())
+					{
+						zombies[i].move(zombies[i].getX(),zombies[i].getY()-1);
+					}
+				}
+			}
 			zombies[i].move(hero.getX()+cam.getX() +8,hero.getY()+cam.getY()+9);
 			zombies[i].render(i+1, cam);
-		}
-	}
-	for(int i=0;i < zombies.size();i++)
-	{
-		if(zombies[i].getX() == (hero.getX()+cam.getX() +8) && zombies[i].getY() == (hero.getY()+cam.getY()+9))
-		{
-			game = false;
-			cout << "GAME OVER" << endl;
 		}
 	}
 }
@@ -205,6 +236,7 @@ void mainGame::processSub()
 		<< zombies[0].getX()-cam.getX() << " " << zombies[0].getY()-cam.getY() << endl;
 	cout << "zombie 2: " << zombies[1].getX() << " " << zombies[1].getY() << endl
 		<< zombies[1].getX()-cam.getX() << " " << zombies[1].getY()-cam.getY() << endl;
+	cout << "hurtTimer: " << hurtTimer << endl;
 	cout << "TIME " << zombies[0].getTime() << endl;
 	cout << "TIME2 " << time(NULL) << endl;
 }
@@ -216,4 +248,28 @@ void mainGame::renderMain()
 void mainGame::renderSub()
 {
 	oamUpdate(&oamSub);
+}
+void mainGame::fight(int i)
+{
+	srand(random);
+	int win = rand()%3;
+
+
+	if(hurtTimer >= 600)
+	{
+		if(win)
+		{
+			for(int j=0;j<zombies.size();j++)
+			{
+			zombies[j].render(i,cam, false);
+			}
+			zombies.erase(zombies.begin()+i-1);
+			
+		}
+		else
+		{
+			hero.setLife(hero.getLife()-1);
+			hurtTimer = 0;
+		}
+		}
 }
