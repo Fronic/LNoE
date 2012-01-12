@@ -1,15 +1,17 @@
-#ifndef H_game
-#define H_game
+#ifndef H_Mmenu
+#define H_Mmenu
 
 #include "constants.h"
+#include "mainscreen.h"
+#include "mainscreenBot.h"
 
 
-class mainGame
+class mainMenu
 {
 public:
 	//constructor
 	//takes starting cord, then background IDs
-	mainGame();
+	mainMenu();
 	void initiate();
 	int events();
 	void processMain();
@@ -17,25 +19,14 @@ public:
 	//renders
 	void renderMain();
 	void renderSub();
-	void fight(int);
-	bool detectCollision(int);
 	bool getStatus();
 
 private:
 	//vector<State*> states;
-	int keys;
-	bool game;
-	bool pause;
 	bool initiated;
-	int count;
-	int hurtTimer;
-	int random;
-	int bg2;
+	touchPosition touch;
 	int bg3;
-	//make our hero
-	heroType hero;
-	camera cam;
-	vector<zombieType> zombies;
+	int bg2;
 };
 
 #endif

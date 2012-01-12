@@ -21,6 +21,7 @@ heroType::heroType(int tempX, int tempY)
 //---------------------------------------------------------------------
 void heroType::init(heroType *sprite, u8* gfx)
 {
+	health = maxHealth;
 	sprite->sprite_gfx_mem = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 
 	sprite->frame_gfx = gfx;
@@ -35,6 +36,7 @@ void heroType::init(heroType *sprite, u8* gfx)
 }
 void heroType::init(int tempX, int tempY,heroType *sprite, u8* gfx)
 {
+	health = maxHealth;
 		x = tempX;
 	y = tempY;
 	state = W_UP;

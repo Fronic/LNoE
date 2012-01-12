@@ -2,7 +2,9 @@
 #define H_core
 
 #include "constants.h"
+#include "mainMenu.h"
 #include "mainGame.h"
+
 
 class gamecore
 {
@@ -21,6 +23,7 @@ public:
 private:
 	//vector<State*> states;
 	mainGame game;
+	mainMenu menu;
 	uint8 currentState;
 	bool CUNT;
 };

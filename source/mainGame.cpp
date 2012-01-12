@@ -6,36 +6,12 @@ mainGame::mainGame()
 	pause = false;
 	count=0;
 	hurtTimer = 600;
+	initiated = false;
 
-	//initualize vram, oam, console, and switch the screens
-	initiate();
-
-	//further initualizes what our hero needs to blit
-	hero.init(112,80,&hero, (u8*)heroTiles);
-	//sets up our backgrounds
-	int bg3 = bgInit(3, BgType_Bmp8, BgSize_B8_512x512,0,0);
-	dmaCopy(grassBitmap, bgGetGfxPtr(bg3), grassBitmapLen);
-	dmaCopy(grassPal, BG_PALETTE, grassPalLen);
-	int bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_512x512, 0,0);
-	dmaCopy(grassBitmap, bgGetGfxPtr(bg2), grassBitmapLen);
-	dmaCopy(grassPal, BG_PALETTE, grassPalLen);
-
-	//initualizes our "camera" it starts at (0,0) and takes the backgrounds' IDs
-	cam.init(0,0,bg3,bg2);
-	hero.animate();	//ensures our hero is blitted at least once
-	//vector<zombieType> zombies(1);
-	vector<zombieType> zombies(1);
+	
 
 }
-/*void mainGame::run()
-{
-while(game)
-{
-events();
-processMain();
-renderMain();
-}
-}*/
+
 void mainGame::initiate()
 {
 	lcdMainOnBottom(); //switches screens; main is on bottom, sub on top
@@ -58,6 +34,26 @@ void mainGame::initiate()
 	dmaCopy(zombiePal, VRAM_F_EXT_SPR_PALETTE[0], 512);
 	dmaCopy(lifePal, VRAM_F_EXT_SPR_PALETTE[2], 512);
 	vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
+
+	//sets up our backgrounds
+	bg3 = bgInit(3, BgType_Bmp8, BgSize_B8_512x512,0,0);
+	dmaCopy(grassBitmap, bgGetGfxPtr(bg3), grassBitmapLen);
+	dmaCopy(grassPal, BG_PALETTE, grassPalLen);
+	bg2 = bgInit(2, BgType_Bmp8, BgSize_B8_512x512, 0,0);
+	dmaCopy(grassBitmap, bgGetGfxPtr(bg2), grassBitmapLen);
+	dmaCopy(grassPal, BG_PALETTE, grassPalLen);
+//initualizes our "camera" it starts at (0,0) and takes the backgrounds' IDs	
+	cam.init(0,0,bg3,bg2);
+
+	//further initualizes what our hero needs to blit
+	hero.init(112,80,&hero, (u8*)heroTiles);
+	
+
+	hero.animate();	//ensures our hero is blitted at least once
+	//vector<zombieType> zombies(1);
+	vector<zombieType> zombies(1);
+
+	initiated = true;
 }
 
 int mainGame::events()
@@ -65,11 +61,6 @@ int mainGame::events()
 	scanKeys();
 
 	int keys = keysHeld();
-
-	if(keys & KEY_START)
-	{
-		return EXIT;
-	}
 
 	//following if statements handle movement and camera movement
 	if(keys && count%2==0)
@@ -152,16 +143,23 @@ int mainGame::events()
 		if(hero.getFrame() >= FRAMES_PER_ANIMATION) hero.setFrame(0); //resets frame to initual one
 		hero.animate(); //render it
 	}
-	for(int i=0;i < zombies.size();i++)
-	{
-		if(zombies[i].getX() == (hero.getX()+cam.getX() +8) && zombies[i].getY() == (hero.getY()+cam.getY()+9))
-		{
-			fight(i);
-		}
-	}
 	if(hero.getLife() == 0)
 	{
-		return EXIT;
+		bgHide(bg3);
+	bgHide(bg2);
+	vramDefault();
+	oamClear(&oamMain,0,0);
+	initiated = false;
+		return MAINMENU;
+	}
+		if(keys & KEY_START)
+	{
+		bgHide(bg3);
+	bgHide(bg2);
+	vramDefault();
+		oamClear(&oamMain,0,0);
+		initiated = false;
+		return MAINMENU;
 	}
 	return MAINGAME;
 }
@@ -218,7 +216,14 @@ void mainGame::processMain()
 				}
 			}
 			zombies[i].move(hero.getX()+cam.getX() +8,hero.getY()+cam.getY()+9);
-			zombies[i].render(i+1, cam);
+			zombies[i].render(i, cam);
+		}
+	}
+		for(int i=0;i < zombies.size();i++)
+	{
+		if(detectCollision(i))
+		{
+				fight(i);
 		}
 	}
 }
@@ -237,6 +242,7 @@ void mainGame::processSub()
 	cout << "zombie 2: " << zombies[1].getX() << " " << zombies[1].getY() << endl
 		<< zombies[1].getX()-cam.getX() << " " << zombies[1].getY()-cam.getY() << endl;
 	cout << "hurtTimer: " << hurtTimer << endl;
+	cout << "random: " << random << endl;
 	cout << "TIME " << zombies[0].getTime() << endl;
 	cout << "TIME2 " << time(NULL) << endl;
 }
@@ -259,10 +265,18 @@ void mainGame::fight(int i)
 	{
 		if(win)
 		{
-			for(int j=0;j<zombies.size();j++)
+			/*for(int j=0;j<zombies.size();j++)
 			{
-			zombies[j].render(i,cam, false);
-			}
+				oamClearSprite(
+					&oamMain,
+					j+10
+					);
+				//zombies[i].render(j, cam, true);
+			}*/
+			oamClearSprite(
+					&oamMain,
+					i
+					);
 			zombies.erase(zombies.begin()+i-1);
 			
 		}
@@ -272,4 +286,30 @@ void mainGame::fight(int i)
 			hurtTimer = 0;
 		}
 		}
+}
+
+bool mainGame::detectCollision(int i)
+{
+		if(hero.getY()+cam.getY()+9 > (zombies[i].getY() + 24))
+		{
+			return false;
+		}
+		else if(hero.getX()+cam.getX() +8 > (zombies[i].getX() + 20))
+		{
+			return false;
+		}
+		else if((hero.getY()+cam.getY()+9 + 24) < zombies[i].getY())
+		{
+			return false;
+		}
+		else if((hero.getX()+cam.getX() +8 + 20) < zombies[i].getX())
+		{
+			return false;
+		}
+		return true;
+
+}
+bool mainGame::getStatus()
+{
+	return initiated;
 }

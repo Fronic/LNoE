@@ -2,7 +2,7 @@
 
 gamecore::gamecore()
 {
-	currentState = MAINGAME;
+	currentState = MAINMENU;
 	CUNT = true;
 }
 void gamecore::run()
@@ -12,8 +12,22 @@ void gamecore::run()
 		switch(currentState)
 		{
 		case MAINMENU:
+			if(!menu.getStatus())
+			{
+				menu.initiate();
+			}
+			currentState = menu.events();
+				menu.processMain();
+				menu.renderMain();
+				menu.processSub();
+				menu.renderSub();
+				swiWaitForVBlank();
 			break;
 		case MAINGAME:
+			if(!game.getStatus())
+			{
+				game.initiate();
+			}
 				currentState = game.events();
 				game.processMain();
 				game.renderMain();

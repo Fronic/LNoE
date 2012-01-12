@@ -2,12 +2,12 @@
 //
 //	Author: Devlin Richberger
 //	Description: Revisioning of the board game Last Night on Earth for DS
-//	Version: 0.0.20
+//	Version: 0.0.24
 //	----
 //	TODO
 //	----
-//	Short-Term: better collision between zombies and the player, player/zombie fights and health, game menu
-//	Long-Term:saving 
+//	Short-Term: pause menu , score system, saving
+//	Long-Term:fight animation, better collision detection 
 //	Distant-Term: hero abilities, weapons, zombie abilities, multiplayer
 //
 //============================================================================
