@@ -56,7 +56,6 @@ int zombieType::getTime()
 	day = timeStruct->tm_mday;
 	month = timeStruct->tm_mon;
 	year = timeStruct->tm_year +1900;
-	//delete timeStruct;
 	return hours*10000+minutes*100+seconds;
 }
 //---------------------------------------------------------------------

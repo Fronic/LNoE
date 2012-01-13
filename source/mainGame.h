@@ -20,9 +20,9 @@ public:
 	void fight(int);
 	bool detectCollision(int);
 	bool getStatus();
+	void setStatus(bool);
 
 private:
-	//vector<State*> states;
 	int keys;
 	bool game;
 	bool pause;

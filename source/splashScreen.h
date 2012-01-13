@@ -1,17 +1,16 @@
-#ifndef H_Mmenu
-#define H_Mmenu
+#ifndef H_splash
+#define H_splash
 
 #include "constants.h"
-#include "mainscreen.h"
-#include "mainscreenBot.h"
+#include "splash.h"
 
 
-class mainMenu
+class splashScreen
 {
 public:
 	//constructor
 	//takes starting cord, then background IDs
-	mainMenu();
+	splashScreen();
 	void initiate();
 	int events();
 	void processMain();
@@ -23,6 +22,7 @@ public:
 
 private:
 	bool initiated;
+	int timer;
 	touchPosition touch;
 	int bg3;
 	int bg2;

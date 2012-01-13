@@ -1,17 +1,15 @@
-#ifndef H_Mmenu
-#define H_Mmenu
+#ifndef H_pause
+#define H_pause
 
 #include "constants.h"
-#include "mainscreen.h"
-#include "mainscreenBot.h"
+#include "pause.h"
 
-
-class mainMenu
+class pauseMenu
 {
 public:
 	//constructor
 	//takes starting cord, then background IDs
-	mainMenu();
+	pauseMenu();
 	void initiate();
 	int events();
 	void processMain();
@@ -22,10 +20,15 @@ public:
 	bool getStatus();
 
 private:
-	bool initiated;
 	touchPosition touch;
-	int bg3;
-	int bg2;
+	int keys;
+	bool game;
+	bool pause;
+	bool initiated;
+	int count;
+	int hurtTimer;
+	int random;
+	int bg1;
 };
 
 #endif

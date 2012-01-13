@@ -2,15 +2,12 @@
 
 mainMenu::mainMenu()
 {
-	//touch.px = 0;
-	//touch.py = 0;
 	initiated = false;
 
 }
 void mainMenu::initiate()
 {
 	lcdMainOnTop();
-	//lcdMainOnBottom(); //switches screens; main is on bottom, sub on top
 
 	videoSetMode(MODE_5_2D);
 	videoSetModeSub(MODE_5_2D); 
@@ -34,7 +31,8 @@ int mainMenu::events()
 	touchRead(&touch);
 	scanKeys();
 	int keys = keysHeld();
-
+	int pressed = keysDown(); 
+	if(!(pressed & KEY_TOUCH)) return MAINMENU;
 	if(touch.px < 64)
 	{
 		return MAINMENU;

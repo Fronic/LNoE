@@ -17,9 +17,9 @@ void mainGame::initiate()
 	lcdMainOnBottom(); //switches screens; main is on bottom, sub on top
 
 	videoSetMode(MODE_5_2D);
-	videoSetModeSub(MODE_0_2D); 
-	vramSetBankH(VRAM_H_SUB_BG );
-	consoleDemoInit();
+	videoSetModeSub(MODE_5_2D); 
+	vramSetBankC(VRAM_C_SUB_BG_0x06200000 );
+	//consoleDemoInit();
 
 	vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
 	vramSetBankB(VRAM_B_MAIN_BG_0x06020000);	
@@ -50,7 +50,6 @@ void mainGame::initiate()
 	
 
 	hero.animate();	//ensures our hero is blitted at least once
-	//vector<zombieType> zombies(1);
 	vector<zombieType> zombies(1);
 
 	initiated = true;
@@ -65,7 +64,10 @@ int mainGame::events()
 	//following if statements handle movement and camera movement
 	if(keys && count%2==0)
 	{
-		
+		if(keys & KEY_L)
+		{
+			lcdSwap(); 
+		}
 		if(keys & KEY_UP)
 		{
 			if(hero.getY() <= SCREEN_TOP-9) //hero is going up not at top of map
@@ -154,12 +156,8 @@ int mainGame::events()
 	}
 		if(keys & KEY_START)
 	{
-		bgHide(bg3);
-	bgHide(bg2);
-	vramDefault();
-		oamClear(&oamMain,0,0);
-		initiated = false;
-		return MAINMENU;
+		//lcdMainOnTop();
+		return PAUSEMENU;
 	}
 	return MAINGAME;
 }
@@ -168,7 +166,20 @@ void mainGame::processMain()
 {
 	count++;
 	hurtTimer++;
-	random++;
+	if(random< 100000)
+	{
+		random++;
+		random++;
+	}
+	else if (random %2 ==0)
+	{
+		random--;
+	}
+	else
+	{
+		random--;
+		random--;
+	}
 	if (count>600 && zombies.size()<12)
 	{
 		zombieType * another = new zombieType;
@@ -177,10 +188,6 @@ void mainGame::processMain()
 		count = 0;
 	}
 	//checks key inputs; also a break out of the game
-	/*if(count%2==0)
-	{
-		events();
-	}*/
 	int keys = keysHeld();
 
 	if(keys & KEY_START) game = false;
@@ -265,18 +272,7 @@ void mainGame::fight(int i)
 	{
 		if(win)
 		{
-			/*for(int j=0;j<zombies.size();j++)
-			{
-				oamClearSprite(
-					&oamMain,
-					j+10
-					);
-				//zombies[i].render(j, cam, true);
-			}*/
-			oamClearSprite(
-					&oamMain,
-					i
-					);
+			oamClear (&oamMain,i,zombies.size()-i) ;
 			zombies.erase(zombies.begin()+i-1);
 			
 		}
@@ -312,4 +308,8 @@ bool mainGame::detectCollision(int i)
 bool mainGame::getStatus()
 {
 	return initiated;
+}
+void mainGame::setStatus(bool set)
+{
+	initiated = set;
 }

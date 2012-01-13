@@ -58,6 +58,7 @@ using namespace std;
 #define MAINMENU 0
 #define MAINGAME 1
 #define PAUSEMENU 2
-#define EXIT 3
+#define SPLASHSCREEN 3
+#define EXIT 4
 
 #endif

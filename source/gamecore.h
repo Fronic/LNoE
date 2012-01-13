@@ -4,6 +4,8 @@
 #include "constants.h"
 #include "mainMenu.h"
 #include "mainGame.h"
+#include "splashScreen.h"
+#include "pauseMenu.h"
 
 
 class gamecore
@@ -21,9 +23,10 @@ public:
 	
 
 private:
-	//vector<State*> states;
 	mainGame game;
 	mainMenu menu;
+	splashScreen splash;
+	pauseMenu pause;
 	uint8 currentState;
 	bool CUNT;
 };
