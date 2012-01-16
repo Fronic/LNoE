@@ -2,13 +2,11 @@
 
 mainGame::mainGame()
 {
-	game = true;
-	pause = false;
 	count=0;
 	hurtTimer = 600;
 	initiated = false;
-
-	
+	score = 0;
+	consoleDemoInit();
 
 }
 
@@ -20,6 +18,8 @@ void mainGame::initiate()
 	videoSetModeSub(MODE_5_2D); 
 	vramSetBankC(VRAM_C_SUB_BG_0x06200000 );
 	//consoleDemoInit();
+	//PrintConsole *main;
+	//consoleInit(0, 1, BgType_Text4bpp, BgSize_T_256x256, 21, 0, false, true);
 
 	vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
 	vramSetBankB(VRAM_B_MAIN_BG_0x06020000);	
@@ -50,7 +50,7 @@ void mainGame::initiate()
 	
 
 	hero.animate();	//ensures our hero is blitted at least once
-	vector<zombieType> zombies(1);
+	std::vector<zombieType> zombies(1);
 
 	initiated = true;
 }
@@ -190,12 +190,9 @@ void mainGame::processMain()
 	//checks key inputs; also a break out of the game
 	int keys = keysHeld();
 
-	if(keys & KEY_START) game = false;
-
 	//updates camera movements
 	cam.update();
 
-	//wait for VBlank and update the OAM
 	if(count%6==0)
 	{
 		for(int i=0;i < zombies.size();i++)
@@ -236,22 +233,24 @@ void mainGame::processMain()
 }
 void mainGame::processSub()
 {
-	//couts some nice info
-	cout << "\x1b[2J";
-	cout << "scrollX: " << cam.getX() << endl;
-	cout << "scrollY: " << cam.getY() << endl;
-	cout << "hero.x: " << hero.getX() << endl;
-	cout << "hero.y: " << hero.getY() << endl;
-	cout << "Hero's actual Location: " << hero.getX()+cam.getX() +8 << " " << hero.getY()+cam.getY()+9 << endl;
-	cout << "Key Pressed: " << keys <<endl;
-	cout << "zombie 1: " << zombies[0].getX() << " " << zombies[0].getY() << endl
-		<< zombies[0].getX()-cam.getX() << " " << zombies[0].getY()-cam.getY() << endl;
-	cout << "zombie 2: " << zombies[1].getX() << " " << zombies[1].getY() << endl
-		<< zombies[1].getX()-cam.getX() << " " << zombies[1].getY()-cam.getY() << endl;
-	cout << "hurtTimer: " << hurtTimer << endl;
-	cout << "random: " << random << endl;
-	cout << "TIME " << zombies[0].getTime() << endl;
-	cout << "TIME2 " << time(NULL) << endl;
+	//std::couts some nice info
+	std::cout << "\x1b[2J";
+	std::cout << "scrollX: " << cam.getX() << std::endl;
+	std::cout << "scrollY: " << cam.getY() << std::endl;
+	std::cout << "hero.x: " << hero.getX() << std::endl;
+	std::cout << "hero.y: " << hero.getY() << std::endl;
+	std::cout << "Hero's actual Location: " << hero.getX()+cam.getX() +8 << " " << hero.getY()+cam.getY()+9 << std::endl;
+	std::cout << "Key Pressed: " << keys <<std::endl;
+	std::cout << "Zombies: " << zombies.size() << std::endl;
+	std::cout << "zombie 1: " << zombies[0].getX() << " " << zombies[0].getY() << std::endl
+		<< zombies[0].getX()-cam.getX() << " " << zombies[0].getY()-cam.getY() << std::endl;
+	std::cout << "zombie 2: " << zombies[1].getX() << " " << zombies[1].getY() << std::endl
+		<< zombies[1].getX()-cam.getX() << " " << zombies[1].getY()-cam.getY() << std::endl;
+	std::cout << "hurtTimer: " << hurtTimer << std::endl;
+	std::cout << "random: " << random << std::endl;
+		std::cout << "score: " << score << std::endl;
+	std::cout << "TIME " << zombies[0].getTime() << std::endl;
+	std::cout << "TIME2 " << time(NULL) << std::endl;
 }
 //renders
 void mainGame::renderMain()
@@ -264,22 +263,23 @@ void mainGame::renderSub()
 }
 void mainGame::fight(int i)
 {
-	srand(random);
+	srand(time(NULL));
 	int win = rand()%3;
 
 
-	if(hurtTimer >= 600)
+	if(hurtTimer >= 300)
 	{
 		if(win)
 		{
-			oamClear (&oamMain,i,zombies.size()-i) ;
-			zombies.erase(zombies.begin()+i-1);
-			
+			oamClear (&oamMain,i+9,zombies.size()+1) ;
+			zombies.erase(zombies.begin()+i);
+			score += 10;
 		}
 		else
 		{
 			hero.setLife(hero.getLife()-1);
 			hurtTimer = 0;
+			score -= 20 * 3;
 		}
 		}
 }
@@ -312,4 +312,8 @@ bool mainGame::getStatus()
 void mainGame::setStatus(bool set)
 {
 	initiated = set;
+}
+int mainGame::getScore()
+{
+	return score;
 }

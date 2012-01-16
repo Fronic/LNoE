@@ -10,7 +10,7 @@
 #include <vector>
 #include "time.h"
 
-using namespace std;
+//using namespace std;
 
 //image includes
 #include "grass.h"
@@ -54,7 +54,9 @@ using namespace std;
 //---------------------------------------------------------------------
 #define MAP_WIDTH 512
 #define MAP_HEIGHT 1024
-
+//---------------------------------------------------------------------
+// Game States
+//---------------------------------------------------------------------
 #define MAINMENU 0
 #define MAINGAME 1
 #define PAUSEMENU 2

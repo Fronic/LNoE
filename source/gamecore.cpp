@@ -1,9 +1,15 @@
 #include "gamecore.h"
 
+
 gamecore::gamecore()
 {
 	currentState = SPLASHSCREEN;
 	CUNT = true;
+	scores.nextEmpty = 0;
+	for(int i=0; i<10; i++)
+	{
+		scores.spot[i] = 0;
+	}
 }
 void gamecore::run()
 {
@@ -36,6 +42,10 @@ void gamecore::run()
 				game.renderMain();
 				game.processSub();
 				game.renderSub();
+				if(!game.getStatus())
+				{
+					saveScore(game.getScore());
+				}
 				break;
 			case PAUSEMENU:
 				if(!pause.getStatus())
@@ -47,6 +57,11 @@ void gamecore::run()
 				game.renderMain();
 				pause.processSub();
 				pause.renderSub();
+				if(menu.getStatus())
+				{
+					game.setStatus(false);
+					saveScore(game.getScore());
+				}
 				break;
 			case SPLASHSCREEN:
 				if(!splash.getStatus())
@@ -67,16 +82,38 @@ void gamecore::run()
 		swiWaitForVBlank();
 	}
 }
-void gamecore::initiate()
-{
 
-}
-void gamecore::process()
+void gamecore::saveScore(int input)
 {
+	int tempInput;
+	fatInitDefault();
+	 if(fopen("LNoE/scores.sav", "rb"))
+	{
+		FILE* save_file = fopen("scores.txt", "rb");
+		fread(&scores, 1, sizeof(scores), save_file);
+		fclose(save_file);	
+	}
+	 for(int i=0;i < 10;i++)
+	 {
+		 if(input >= scores.spot[i] && scores.nextEmpty < 10)
+		 {
+			 for(int j=i; j<9 && scores.nextEmpty !=j;j++)
+			 {
+				 tempInput = scores.spot[j];
+				 scores.spot[j] = input;
+				 input = tempInput;
+			 }
+			 scores.nextEmpty++;
+			 i=10;
+		 }
+		 else if(scores.nextEmpty==i)
+		 {
+			 scores.spot[scores.nextEmpty] = input;
+		 }
+	 }
 
-}
-//renders
-void gamecore::render()
-{
 
+	FILE* save_file = fopen("LNoE/scores.sav", "wb");
+	fwrite(&scores, 1, sizeof(scores), save_file);
+	fclose(save_file);
 }

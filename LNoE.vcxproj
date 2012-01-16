@@ -61,23 +61,24 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\camera.cpp" />
-    <ClCompile Include="source\constants.cpp" />
     <ClCompile Include="source\gamecore.cpp" />
     <ClCompile Include="source\heroType.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\mainGame.cpp" />
     <ClCompile Include="source\mainMenu.cpp" />
+    <ClCompile Include="source\pauseMenu.cpp" />
+    <ClCompile Include="source\splashScreen.cpp" />
     <ClCompile Include="source\zombieType.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="build\grass.h" />
-    <ClInclude Include="build\hero.h" />
     <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\constants.h" />
     <ClInclude Include="source\gamecore.h" />
     <ClInclude Include="source\heroType.h" />
     <ClInclude Include="source\mainGame.h" />
     <ClInclude Include="source\mainMenu.h" />
+    <ClInclude Include="source\pauseMenu.h" />
+    <ClInclude Include="source\splashScreen.h" />
     <ClInclude Include="source\zombieType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

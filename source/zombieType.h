@@ -8,13 +8,14 @@ class camera; //so this class can access a camera object
 class zombieType
 {
 public:
-	//constructor sets starting location on screen
+	//constructor
 	zombieType();
+	//random
 	void startRandom();
 	int getTime();
 	//initualizes other stuff
 	void init();
-	//animates the hero
+	//animates the zombie
 	void animate();
 	void render(int, camera &);
 	void render(int, camera &, bool);
@@ -27,18 +28,21 @@ public:
 	void addFrame();
 	void setState(int);
 	u16* getGfx();
+
+	//checks if zombie is offScreen
 	bool offScreen(camera &);
 private:
 	int x;
 	int y;
 	int health;
 
+	//sprite stuff
 	u16* sprite_gfx_mem;
 	u8*  frame_gfx;
-
 	int state;
 	int anim_frame;
 
+	//moves frames more naturally
 	int frameDelay;
 };
 

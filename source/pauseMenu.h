@@ -8,8 +8,8 @@ class pauseMenu
 {
 public:
 	//constructor
-	//takes starting cord, then background IDs
 	pauseMenu();
+	//initiates other stuff
 	void initiate();
 	int events();
 	void processMain();
@@ -17,17 +17,13 @@ public:
 	//renders
 	void renderMain();
 	void renderSub();
+
 	bool getStatus();
 
 private:
-	touchPosition touch;
+	touchPosition touch; //touch
 	int keys;
-	bool game;
-	bool pause;
 	bool initiated;
-	int count;
-	int hurtTimer;
-	int random;
 	int bg1;
 };
 

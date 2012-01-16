@@ -52,24 +52,21 @@
     <ClCompile Include="source\mainGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\constants.cpp">
+    <ClCompile Include="source\mainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\mainMenu.cpp">
+    <ClCompile Include="source\splashScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\pauseMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="build\grass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\heroType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="build\hero.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\camera.h">
@@ -85,6 +82,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\mainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\splashScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\pauseMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

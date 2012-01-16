@@ -2,14 +2,7 @@
 
 pauseMenu::pauseMenu()
 {
-	game = true;
-	pause = false;
-	count=0;
-	hurtTimer = 600;
 	initiated = false;
-
-	
-
 }
 
 void pauseMenu::initiate()

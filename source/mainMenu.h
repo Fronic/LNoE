@@ -10,8 +10,8 @@ class mainMenu
 {
 public:
 	//constructor
-	//takes starting cord, then background IDs
 	mainMenu();
+		//initiates other stuff; mainly for going from other states
 	void initiate();
 	int events();
 	void processMain();
@@ -19,10 +19,13 @@ public:
 	//renders
 	void renderMain();
 	void renderSub();
+
 	bool getStatus();
 
 private:
+	//if the vram and other stuff needs to be reinitiated
 	bool initiated;
+	//touch
 	touchPosition touch;
 	int bg3;
 	int bg2;

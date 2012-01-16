@@ -9,7 +9,6 @@ class splashScreen
 {
 public:
 	//constructor
-	//takes starting cord, then background IDs
 	splashScreen();
 	void initiate();
 	int events();
@@ -22,7 +21,7 @@ public:
 
 private:
 	bool initiated;
-	int timer;
+	int timer;//timer till change to mainmenu
 	touchPosition touch;
 	int bg3;
 	int bg2;

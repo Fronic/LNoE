@@ -2,17 +2,17 @@
 //
 //	Author: Devlin Richberger
 //	Description: Revisioning of the board game Last Night on Earth for DS
-//	Version: 0.0.27
+//	Version: 0.0.29
 //	----
 //	TODO
 //	----
-//	Short-Term: score system, saving
-//	Long-Term:fight animation, better collision detection 
+//	Short-Term: score screen, fight animation
+//	Long-Term: better collision detection, different sprites, better map
 //	Distant-Term: hero abilities, weapons, zombie abilities, multiplayer
 //
 //============================================================================
 
-#include "gamecore.h" //has all includes, consts and other stuffs
+#include "gamecore.h"
 
 
 int main(void)

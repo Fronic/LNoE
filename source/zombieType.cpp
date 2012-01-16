@@ -23,22 +23,22 @@ void zombieType::startRandom()
 		//left
 	case 0:
 		x = -36;
-		y = rand()%320;
+		y = rand()%553-32;
 		break;
 	//right
 	case 1:
-		x = 768;
-		y = rand()%320;
+		x = 1040;
+		y = rand()%553-32;
 		break;
 	//up
 	case 2:
-		x = rand()%768;
+		x = rand()%1072-32;
 		y = 0;
 		break;
 		//down
 	case 3:
-		x = rand()%768;
-		y = 320;
+		x = rand()%1072-32;
+		y = 521;
 		break;
 	}
 }
@@ -49,13 +49,10 @@ int zombieType::getTime()
 	time_t unixTime = time(NULL);
 	
 	struct tm* timeStruct = gmtime((const time_t *)&unixTime);
-	int hours, minutes, seconds, day, month, year;
+	int hours, minutes, seconds;
 	hours = timeStruct->tm_hour;
 	minutes = timeStruct->tm_min;
 	seconds = timeStruct->tm_sec;
-	day = timeStruct->tm_mday;
-	month = timeStruct->tm_mon;
-	year = timeStruct->tm_year +1900;
 	return hours*10000+minutes*100+seconds;
 }
 //---------------------------------------------------------------------
