@@ -16,7 +16,7 @@ void mainGame::initiate()
 	videoSetMode(MODE_5_2D);
 	videoSetModeSub(MODE_5_2D); 
 	vramSetBankC(VRAM_C_SUB_BG_0x06200000 );
-	//consoleDemoInit();
+	consoleDemoInit();
 	//PrintConsole *main;
 	//consoleInit(0, 1, BgType_Text4bpp, BgSize_T_256x256, 21, 0, false, true);
 
@@ -257,6 +257,10 @@ void mainGame::processSub()
 		std::cout << "score: " << score << std::endl;
 	std::cout << "TIME " << zombies[0].getTime() << std::endl;
 	std::cout << "TIME2 " << time(NULL) << std::endl;
+	for(int i=1;i<=10;i++)
+	{
+		std::cout << i << "] " << scores.spot[i] << " ";
+	}
 }
 //renders
 void mainGame::renderMain()
@@ -269,7 +273,6 @@ void mainGame::renderSub()
 }
 void mainGame::fight(int i)
 {
-	srand(time(NULL));
 	int win = rand()%3;
 
 

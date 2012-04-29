@@ -14,10 +14,8 @@ zombieType::zombieType()
 void zombieType::startRandom()
 {
 	int startLoc;
-	srand(getTime());
 	startLoc = rand()%4;
 	
-	srand(time(NULL));
 	switch(startLoc)
 	{
 		//left

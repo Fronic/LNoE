@@ -17,6 +17,7 @@
 
 int main(void)
 {
+	srand(time(NULL));
 	gamecore core;
 	core.run();
 }

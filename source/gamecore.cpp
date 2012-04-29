@@ -7,9 +7,21 @@ gamecore::gamecore()
 	CUNT = true;
 	scores.nextEmpty = 0;
 	//empty struct
-	for(int i=0; i<10; i++)
+	fatInitDefault(); 
+	//opens and reads file into struct
+	 if(!fopen("fat:/LNoE.sav", "rb"))
 	{
-		scores.spot[i] = 0;
+		for(int i=0; i<10; i++)
+		{
+			scores.spot[i] = 0;
+	
+		}
+	}
+	 else if(fopen("fat:/LNoE.sav", "rb"))
+	{
+		FILE* save_file = fopen("fat:/LNoE.sav", "rb");
+		fread(&scores, 1, sizeof(scores), save_file);
+		fclose(save_file);	
 	}
 }
 void gamecore::run()
@@ -98,11 +110,11 @@ void gamecore::run()
 void gamecore::saveScore(int input)
 {
 	int tempInput; //when moving lower scores down
-	fatInitDefault(); 
+	//fatInitDefault(); 
 	//opens and reads file into struct
-	 if(fopen("LNoE.sav", "rb"))
+	 if(fopen("fat:/LNoE.sav", "rb"))
 	{
-		FILE* save_file = fopen("LNoE.sav", "rb");
+		FILE* save_file = fopen("fat:/LNoE.sav", "rb");
 		fread(&scores, 1, sizeof(scores), save_file);
 		fclose(save_file);	
 	}
@@ -113,7 +125,7 @@ void gamecore::saveScore(int input)
 		 if(input >= scores.spot[i])
 		 {
 			 //moves scores down
-			 for(int j=i; j<9 && scores.nextEmpty !=j;j++)
+			 for(int j=i; j<10;j++)
 			 {
 				 tempInput = scores.spot[j];
 				 scores.spot[j] = input;
@@ -122,17 +134,19 @@ void gamecore::saveScore(int input)
 			 scores.nextEmpty++;
 			 i=10;
 		 }
+		 /*
 		 //if score is lowest
-		 else if(scores.nextEmpty==i)
+		 else if(i==9 && input>scores.spot[9])
 		 {
-			 scores.spot[scores.nextEmpty] = input;
+			 scores.spot[9] = input;
 			 scores.nextEmpty++;
 			 i=10;
 		 }
+		 */
 	 }
 
 	 //saves to file
-	FILE* save_file = fopen("LNoE.sav", "wb");
+	FILE* save_file = fopen("fat:/LNoE.sav", "wb");
 	fwrite(&scores, 1, sizeof(scores), save_file);
 	fclose(save_file);
 }

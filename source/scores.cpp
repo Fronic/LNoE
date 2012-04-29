@@ -19,10 +19,17 @@
 	bgShow(bg1);
 
 	consoleSelect( &pcBtm );
-	std::cout << "\t ---Scores---" << std::endl;
-	for(int i=1;i<=10;i++)
+ if(fopen("LNoE.sav", "rb"))
 	{
-		std::cout <<"\t" << i << "] \t" << scores.spot[i] << std::endl;
+		FILE* save_file = fopen("fat:\LNoE.sav", "rb");
+		fread(&scores, 1, sizeof(scores), save_file);
+		fclose(save_file);	
+	}
+
+	std::cout << "\t ---Scores---" << std::endl;
+	for(int i=0;i<10;i++)
+	{
+		std::cout <<"\t" << i+1 << "] \t" << scores.spot[i] << std::endl;
 	}
 
 	//std::cout<<"Bottom ScreenAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABottom ScreenAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABottom ScreenAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCDDDDDDDDDDDDDDDDDDDDEEEEEEEEEEEEEEEEEEEEFFFFFFFF" << std::endl;
