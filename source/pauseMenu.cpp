@@ -35,7 +35,8 @@ vramSetBankC(VRAM_C_SUB_BG_0x06200000 );
 	bgHide(bg1);
 	oamClear(&oamMain,0,0);
 	initiated = false;
-		return MAINMENU;
+
+		return SCORESCREEN;
 	}
 	return PAUSEMENU;
 }

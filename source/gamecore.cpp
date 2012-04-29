@@ -6,6 +6,7 @@ gamecore::gamecore()
 	currentState = SPLASHSCREEN;
 	CUNT = true;
 	scores.nextEmpty = 0;
+	//empty struct
 	for(int i=0; i<10; i++)
 	{
 		scores.spot[i] = 0;
@@ -74,6 +75,17 @@ void gamecore::run()
 				splash.processSub();
 				splash.renderSub();
 				break;
+			case SCORESCREEN:
+				if(!scoreScreen.getStatus())
+				{
+					scoreScreen.initiate();
+				}
+				currentState = scoreScreen.events();
+				scoreScreen.processMain();
+				scoreScreen.renderMain();
+				scoreScreen.processSub();
+				scoreScreen.renderSub();
+				break;
 			case EXIT:
 				CUNT = false;
 				break;
@@ -85,18 +97,22 @@ void gamecore::run()
 
 void gamecore::saveScore(int input)
 {
-	int tempInput;
-	fatInitDefault();
-	 if(fopen("LNoE/scores.sav", "rb"))
+	int tempInput; //when moving lower scores down
+	fatInitDefault(); 
+	//opens and reads file into struct
+	 if(fopen("LNoE.sav", "rb"))
 	{
-		FILE* save_file = fopen("scores.txt", "rb");
+		FILE* save_file = fopen("LNoE.sav", "rb");
 		fread(&scores, 1, sizeof(scores), save_file);
 		fclose(save_file);	
 	}
+	 //puts input into its spot in struct
 	 for(int i=0;i < 10;i++)
 	 {
-		 if(input >= scores.spot[i] && scores.nextEmpty < 10)
+		 //if score is higher than a score in the middle of struct
+		 if(input >= scores.spot[i])
 		 {
+			 //moves scores down
 			 for(int j=i; j<9 && scores.nextEmpty !=j;j++)
 			 {
 				 tempInput = scores.spot[j];
@@ -106,14 +122,17 @@ void gamecore::saveScore(int input)
 			 scores.nextEmpty++;
 			 i=10;
 		 }
+		 //if score is lowest
 		 else if(scores.nextEmpty==i)
 		 {
 			 scores.spot[scores.nextEmpty] = input;
+			 scores.nextEmpty++;
+			 i=10;
 		 }
 	 }
 
-
-	FILE* save_file = fopen("LNoE/scores.sav", "wb");
+	 //saves to file
+	FILE* save_file = fopen("LNoE.sav", "wb");
 	fwrite(&scores, 1, sizeof(scores), save_file);
 	fclose(save_file);
 }

@@ -67,6 +67,7 @@
     <ClCompile Include="source\mainGame.cpp" />
     <ClCompile Include="source\mainMenu.cpp" />
     <ClCompile Include="source\pauseMenu.cpp" />
+    <ClCompile Include="source\scores.cpp" />
     <ClCompile Include="source\splashScreen.cpp" />
     <ClCompile Include="source\zombieType.cpp" />
   </ItemGroup>
@@ -78,6 +79,7 @@
     <ClInclude Include="source\mainGame.h" />
     <ClInclude Include="source\mainMenu.h" />
     <ClInclude Include="source\pauseMenu.h" />
+    <ClInclude Include="source\scores.h" />
     <ClInclude Include="source\splashScreen.h" />
     <ClInclude Include="source\zombieType.h" />
   </ItemGroup>

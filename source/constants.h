@@ -61,6 +61,15 @@
 #define MAINGAME 1
 #define PAUSEMENU 2
 #define SPLASHSCREEN 3
-#define EXIT 4
+#define SCORESCREEN 4
+#define EXIT 5
+
+
+	//struct for saving
+struct Scores
+{
+	int spot[10], nextEmpty;
+};
+static Scores scores;
 
 #endif

@@ -15,6 +15,7 @@
 #include "mainGame.h"
 #include "splashScreen.h"
 #include "pauseMenu.h"
+#include "scores.h"
 
 
 class gamecore
@@ -26,10 +27,7 @@ public:
 	void run();
 	//saves the game's scores
 	void saveScore(int);
-	struct Scores
-{
-	int spot[10], nextEmpty;
-}scores;
+
 
 private:
 	//instances of the objects that makeup the game
@@ -37,6 +35,7 @@ private:
 	mainMenu menu;
 	splashScreen splash;
 	pauseMenu pause;
+	ScoreScreen scoreScreen;
 	//holds the state of the game
 	uint8 currentState;
 	//keeps loop going

@@ -32,7 +32,7 @@ private:
 	int keys;
 	//checks if the vram and other stuff needs to be reinitiated
 	bool initiated;
-
+	unsigned int gameTimer;
 	int score;
 	int count; //delays stuff
 	int hurtTimer; //delays getting hurt again

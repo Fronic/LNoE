@@ -7,7 +7,6 @@ mainGame::mainGame()
 	initiated = false;
 	score = 0;
 	consoleDemoInit();
-
 }
 
 void mainGame::initiate()
@@ -152,11 +151,14 @@ int mainGame::events()
 	vramDefault();
 	oamClear(&oamMain,0,0);
 	initiated = false;
-		return MAINMENU;
+		return SCORESCREEN;
 	}
 		if(keys & KEY_START)
 	{
-		//lcdMainOnTop();
+		//bgHide(bg3);
+	//bgHide(bg2);
+	//vramDefault();
+	//initiated = false;
 		return PAUSEMENU;
 	}
 	return MAINGAME;
@@ -230,6 +232,10 @@ void mainGame::processMain()
 				fight(i);
 		}
 	}
+		if(count%100==1)
+		{
+			score++;
+		}
 }
 void mainGame::processSub()
 {
